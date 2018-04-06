@@ -1,0 +1,94 @@
+function y_hat = lm_func(t,p,c)
+% y_hat = lm_func(t,p,c)
+%  
+% three example functions used for nonlinear least squares curve-fitting
+% in the tutorial file lm_examp.m
+% to demonstrate the Levenberg-Marquardt function, lm.m
+%
+% -------- INPUT VARIABLES ---------
+%  t     = m-vector of independent variable values (assumed to be error-free)
+%  p     = n-vector of parameter values , n = 4 in these examples
+%  c     = optional vector of other constants
+% 
+% ---------- OUTPUT VARIABLES -------
+% y_hat  = m-vector of the curve-fit function evaluated at points t and
+%          with parameters p
+%
+% H.P. Gavin, Dept. Civil & Environ. Eng'g, Duke Univ.
+
+
+global example_number
+
+%  example 1:  easy for LM ... a poor initial guess is ok
+if example_number == 1
+   y_hat = p(1)*exp(-t/p(2)) + p(3)*t.*exp(-t/p(4));
+end
+
+%  example 2: medium for LM ... local minima
+if example_number == 2
+   mt = max(t);
+   y_hat = p(1)*(t/mt) + p(2)*(t/mt).^2 + p(3)*(t/mt).^3 + p(4)*(t/mt).^4;
+end
+
+% example 3: difficult for LM ... needs a very good initial guess
+if example_number == 3
+   y_hat = p(1)*exp(-t/p(2)) + p(3)*sin(t/p(4));
+end
+
+if example_number==4
+    y_hat=
+
+
+%%地震数据预处理
+
+
+
+%%%%%%%%%%%%%%%%%%%
+%%建立目标函数
+%%目标函数由三项构成，分别是：地震数据拟合，模型约束项 ，稀疏约束项
+alpha_seis=1;%地震数据拟合权重
+alpha_model=1-alpha_seis;%模型约束权重
+alpha_sparse=10;%稀疏约束权重
+lamda=1;
+
+
+%%合成记录与地震数据拟合 sum1 = (thery-data)**2
+sum1=0.0;TMS=0.0;LMS=0;
+nimp=M;
+for i=0:1:nimp
+    sum1=sum1+pow((x(i)-S(i)),2.0);
+end
+
+for i=0:1:nimp
+    TMS=TMS+pow(x(i),2.0);
+    TMS=TMs/nimp;
+    obj_seis=sum1/TMS;
+end
+
+%%与初始模型拟合
+sum2=0;
+for i=0:1:nimp;
+    sum2=sum2+pow(imp(i)-model(i),2.0);
+end
+
+for i=0:1:nimp
+    LMS=LMS+pow(model(i),2.0);
+    LMS=LMs/nimp;
+    obj_model=sum2/LMS;
+end
+
+%%目标函数
+sum3=0.0;
+for i=0:1:nimp
+    sum3=sum3+abs(ref(i));
+    obj_sparse=sum3;
+end
+
+
+    
+
+
+
+
+
+% LM_FUNC ------------------------------------ 13 Apr 2011, 27 Jun 2011
